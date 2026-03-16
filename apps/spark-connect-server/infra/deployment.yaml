@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spark-connect-server
+  namespace: spark
+  labels:
+    app: spark-connect-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spark-connect-server
+  template:
+    metadata:
+      labels:
+        app: spark-connect-server
+    spec:
+      serviceAccountName: spark
+      containers:
+        - name: spark-connect-server
+          image: spark-connect-server:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 15002
+              name: grpc
+            - containerPort: 4040
+              name: spark-ui
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              value: minioadmin
+            - name: AWS_SECRET_ACCESS_KEY
+              value: minioadmin123
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "500m"
+            limits:
+              memory: "4Gi"
+              cpu: "2"
