@@ -1,0 +1,11 @@
+# KEDA operator values — default is sufficient for local dev
+replicaCount: 1
+
+resources:
+  operator:
+    requests:
+      cpu: 100m
+      memory: 64Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi

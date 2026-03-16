@@ -1,0 +1,40 @@
+plugins {
+    id 'scala'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+group = 'com.example'
+version = '0.1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.scala-lang:scala-library:2.12.18'
+    compileOnly  'org.apache.spark:spark-sql_2.12:3.5.3'
+    implementation 'org.apache.iceberg:iceberg-spark-runtime-3.5_2.12:1.7.0'
+    compileOnly  'org.apache.hadoop:hadoop-aws:3.3.4'
+    implementation 'com.typesafe:config:1.4.3'
+}
+
+shadowJar {
+    archiveBaseName    = 'app'
+    archiveClassifier  = ''
+    archiveVersion     = ''
+
+    mergeServiceFiles()
+
+    manifest {
+        attributes 'Main-Class': 'com.example.Main'
+    }
+
+    // Avoid signature file conflicts in fat JAR
+    exclude 'META-INF/*.RSA'
+    exclude 'META-INF/*.SF'
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/MANIFEST.MF'
+}
+
+// Make the default 'build' task produce the shadow JAR
+build.dependsOn shadowJar

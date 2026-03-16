@@ -1,0 +1,25 @@
+mode: standalone
+replicas: 1
+
+rootUser: minioadmin
+rootPassword: minioadmin123
+
+persistence:
+  enabled: true
+  size: 20Gi
+
+resources:
+  requests:
+    memory: 512Mi
+    cpu: 250m
+
+service:
+  type: ClusterIP
+  port: 9000
+
+consoleService:
+  type: ClusterIP
+  port: 9001
+
+environment:
+  MINIO_BROWSER_REDIRECT_URL: "http://localhost:9001"

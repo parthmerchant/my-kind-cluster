@@ -1,0 +1,10 @@
+# Kubeflow Spark Operator values
+controller:
+  workers: 1
+
+webhook:
+  enable: true
+
+spark:
+  jobNamespaces:
+    - spark

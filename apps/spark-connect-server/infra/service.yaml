@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: spark-connect-server
+  namespace: spark
+spec:
+  selector:
+    app: spark-connect-server
+  ports:
+    - name: grpc
+      port: 15002
+      targetPort: 15002
+    - name: spark-ui
+      port: 4040
+      targetPort: 4040
